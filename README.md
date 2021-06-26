@@ -33,7 +33,7 @@ Predict:
 
 ```
 python predict.py
-
+```
 ## Documentation
 
 In the following examples, `gaze` refers to an instance of the `GazeTracking` class.
