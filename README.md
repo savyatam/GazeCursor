@@ -1,6 +1,6 @@
-# Gaze Tracking
+# Mouse control via Live Eye Gaze Tracking
 
-This is code contains dlib library that provides a **webcam-based eye tracking system**. Few changes were made to give you the exact position of the pupils and the gaze direction, in real time. For more information , refer gaze_tracking directory and documentation.
+This is code contains dlib library that provides a **webcam-based eye tracking system**. Few changes were made to get the exact position of the pupils and the gaze direction, in real time. For more information , refer gaze_tracking directory and documentation.
 
 
 ## Installation
