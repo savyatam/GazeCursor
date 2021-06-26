@@ -31,10 +31,11 @@ fields = ['LeftX', 'RightX', 'LeftY', 'RightY','LeftW','LeftH','RighttW','RightH
 import time
 
 # timeout variable can be omitted, if you use specific value in the while condition
-timeout = 3*60   # [seconds]
+timeout = 10*60   # [seconds]
 
 timeout_start = time.time()
 
+prev =time.time()
 
 while time.time() < timeout_start + timeout:
     # We get a new frame from the webcam
@@ -63,8 +64,8 @@ while time.time() < timeout_start + timeout:
     ls=gaze.get_left_eyesize()
     rs=gaze.get_right_eyesize()
 
-    if set_data== 1 and t != l and t!= r and str(ls) != t and str(rs) != t:
-        cv2.putText(frame,'collecting data.....', (90, 60), cv2.FONT_HERSHEY_DUPLEX, 1.6, (147, 58, 31), 2)
+    if set_data== 1 and t != l and t!= r and str(ls) != t and str(rs) != t and time.time()-prev > 0.4:
+        cv2.putText(frame,'pupil detected.....', (90, 60), cv2.FONT_HERSHEY_DUPLEX, 1.6, (147, 58, 31), 2)
         data=[left_pupil[0],left_pupil[1],right_pupil[0],right_pupil[1],ls[0],ls[1],rs[0],rs[1]]
         data = np.array(data)
         data = np.reshape(data, (1,8))
@@ -72,6 +73,7 @@ while time.time() < timeout_start + timeout:
         dataDF.columns = fields
         result = RF_multi.predict(dataDF)[0]
         mouse.position=(result[0],result[1])
+        prev =time.time()
         #print(result)
         
 

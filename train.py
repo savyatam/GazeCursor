@@ -10,7 +10,7 @@ import pickle
 import os
 
 
-df = pd.read_csv('data.csv')
+df = pd.read_csv('SampleData.csv')
 y = df['CursorX']
 y2 = df['CursorY']
 y_y = pd.concat([y,y2],axis=1)

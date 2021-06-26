@@ -14,13 +14,13 @@ data = []
 
 fields = ['CursorX','CursorY','LeftX', 'RightX', 'LeftY', 'RightY','LeftW','LeftH','RighttW','RightH']
 # name of csv file 
-filename = "data.csv"
+filename = "SampleData.csv"
     
 
 import time
 
 # timeout variable can be omitted, if you use specific value in the while condition
-timeout = 5*60   # [seconds]
+timeout = 8*60   # [seconds]
 
 timeout_start = time.time()
 
