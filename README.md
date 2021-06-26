@@ -1,6 +1,6 @@
-# Gaze Tracking
+# Mouse control via Live Eye Gaze Tracking
 
-This is code contains dlib library that provides a **webcam-based eye tracking system**. Few changes were made to give you the exact position of the pupils and the gaze direction, in real time. For more information , refer gaze_tracking directory and documentation.
+This is code contains dlib library that provides a **webcam-based eye tracking system**. Few changes were made to get the exact position of the pupils and the gaze direction, in real time. For more information , refer gaze_tracking directory and documentation.
 
 
 ## Installation
@@ -33,7 +33,7 @@ Predict:
 
 ```
 python predict.py
-
+```
 ## Documentation
 
 In the following examples, `gaze` refers to an instance of the `GazeTracking` class.
@@ -61,30 +61,6 @@ gaze.pupil_right_coords()
 ```
 
 Returns the coordinates (x,y) of the right pupil.
-
-### Looking to the left
-
-```python
-gaze.is_left()
-```
-
-Returns `True` if the user is looking to the left.
-
-### Looking to the right
-
-```python
-gaze.is_right()
-```
-
-Returns `True` if the user is looking to the right.
-
-### Looking at the center
-
-```python
-gaze.is_center()
-```
-
-Returns `True` if the user is looking at the center.
 
 ### Left eye size
 
