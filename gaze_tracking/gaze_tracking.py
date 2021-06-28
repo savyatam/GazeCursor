@@ -62,6 +62,29 @@ class GazeTracking(object):
         self.frame = frame
         self._analyze()
 
+    def eye_left_bb(self):
+        """Returns the Bounding box of the left eye"""
+        if self.pupils_located:
+            bb = self.eye_left.BB
+            return bb
+
+    def eye_right_bb(self):
+        """Returns the Bounding box of the right eye"""
+        if self.pupils_located:
+            bb = self.eye_right.BB
+            return bb
+    
+    def eye_left_origin(self):
+        """Returns the origin point of the left eye"""
+        if self.pupils_located:
+            return self.eye_left.origin
+    
+    
+    def eye_right_origin(self):
+        """Returns the origin point of the right eye"""
+        if self.pupils_located:
+            return self.eye_right.origin
+
     def pupil_left_coords(self):
         """Returns the coordinates of the left pupil"""
         if self.pupils_located:
@@ -137,9 +160,13 @@ class GazeTracking(object):
             color = (0, 255, 0)
             x_left, y_left = self.pupil_left_coords()
             x_right, y_right = self.pupil_right_coords()
+            left_bb = self.eye_left_bb()
+            right_bb = self.eye_right_bb()
             cv2.line(frame, (x_left - 5, y_left), (x_left + 5, y_left), color)
             cv2.line(frame, (x_left, y_left - 5), (x_left, y_left + 5), color)
             cv2.line(frame, (x_right - 5, y_right), (x_right + 5, y_right), color)
             cv2.line(frame, (x_right, y_right - 5), (x_right, y_right + 5), color)
+            cv2.rectangle(frame,(left_bb[0]-20,left_bb[1]-20),(left_bb[0]+left_bb[2]+20,left_bb[1]+left_bb[3]+10),(0,255,0),1)
+            cv2.rectangle(frame,(right_bb[0]-20,right_bb[1]-20),(right_bb[0]+right_bb[2]+20,right_bb[1]+right_bb[3]+10),(0,255,0),1)
 
         return frame

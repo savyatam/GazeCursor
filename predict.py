@@ -26,7 +26,7 @@ set_data =0
 data = []
 
 
-fields = ['LeftX', 'RightX', 'LeftY', 'RightY','LeftW','LeftH','RighttW','RightH']
+fields = ['LeftX', 'RightX', 'LeftY', 'RightY','LeftW','LeftH','RighttW','RightH','Origin_left_X','Origin_left_Y','Origin_right_X','Origin_right_Y']
 
 import time
 
@@ -56,7 +56,10 @@ while time.time() < timeout_start + timeout:
     if cv2.waitKey(1) & 0xFF == ord('s'):
         print('go')
         set_data=1
- 
+    
+    # get left eye and right eye origin points i.e leftmost point of bounding box
+    origin_left_eye=gaze.eye_left_origin()
+    origin_right_eye=gaze.eye_right_origin()
 
     l= str(left_pupil) 
     r= str(right_pupil)
@@ -66,9 +69,9 @@ while time.time() < timeout_start + timeout:
 
     if set_data== 1 and t != l and t!= r and str(ls) != t and str(rs) != t and time.time()-prev > 0.4:
         cv2.putText(frame,'pupil detected.....', (90, 60), cv2.FONT_HERSHEY_DUPLEX, 1.6, (147, 58, 31), 2)
-        data=[left_pupil[0],left_pupil[1],right_pupil[0],right_pupil[1],ls[0],ls[1],rs[0],rs[1]]
+        data=[left_pupil[0],left_pupil[1],right_pupil[0],right_pupil[1],ls[0],ls[1],rs[0],rs[1],origin_left_eye[0],origin_left_eye[1],origin_right_eye[0],origin_right_eye[1]]
         data = np.array(data)
-        data = np.reshape(data, (1,8))
+        data = np.reshape(data, (1,12))
         dataDF = pd.DataFrame(data)
         dataDF.columns = fields
         result = RF_multi.predict(dataDF)[0]

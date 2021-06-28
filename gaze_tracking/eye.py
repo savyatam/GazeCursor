@@ -90,6 +90,29 @@ class Eye(object):
 
         return ratio
 
+    def _Bounding_Box(self, landmarks, points):
+        """Calculates a ratio that can indicate whether an eye is closed or not.
+        It's the division of the width of the eye, by its height.
+
+        Arguments:
+            landmarks (dlib.full_object_detection): Facial landmarks for the face region
+            points (list): Points of an eye (from the 68 Multi-PIE landmarks)
+
+        Returns:
+            The computed ratio
+        """
+        left = (landmarks.part(points[0]).x, landmarks.part(points[0]).y)
+        right = (landmarks.part(points[3]).x, landmarks.part(points[3]).y)
+        top = self._middle_point(landmarks.part(points[1]), landmarks.part(points[2]))
+        bottom = self._middle_point(landmarks.part(points[5]), landmarks.part(points[4]))
+
+        eye_width = math.hypot((left[0] - right[0]), (left[1] - right[1]))
+        eye_height = math.hypot((top[0] - bottom[0]), (top[1] - bottom[1]))
+        eye_width = int(eye_width)
+        eye_height= int(eye_height)
+
+        return (left[0],left[1],eye_width,eye_height)
+
     def _width_height(self, landmarks, points):
         """
 
@@ -109,6 +132,7 @@ class Eye(object):
         eye_height = math.hypot((top[0] - bottom[0]), (top[1] - bottom[1]))
 
         return (eye_width,eye_height)
+        
 
     def _analyze(self, original_frame, landmarks, side, calibration):
         """Detects and isolates the eye in a new frame, sends data to the calibration
@@ -129,6 +153,7 @@ class Eye(object):
 
         self.blinking = self._blinking_ratio(landmarks, points)
         self.widthNheight = self._width_height(landmarks,points)
+        self.BB = self._Bounding_Box(landmarks,points)
         self._isolate(original_frame, landmarks, points)
 
         if not calibration.is_complete():

@@ -10,7 +10,7 @@ import pickle
 import os
 
 
-df = pd.read_csv('SampleData.csv')
+df = pd.read_csv('SampleDataNew.csv')
 y = df['CursorX']
 y2 = df['CursorY']
 y_y = pd.concat([y,y2],axis=1)
@@ -26,11 +26,11 @@ preds = np.stack([t.predict(X_test_all) for t in RF_multi.estimators_])
 preds[:,0], np.mean(preds[:,0]), yy_test
 plt.plot([r2_score(yy_test, np.mean(preds[:i+1], axis=0)) for i in range(100)]);
 
-myself = [251 ,239,	327 ,	244 ,	30.594117 ,	10.049876 ,	33.241540 ,	11.180340]
+myself = [251 ,239,	327 ,	244 ,	30.594117 ,	10.049876 ,	33.241540 ,	11.180340, 0, 0, 0, 0]
 myself = np.array(myself)
-myself = np.reshape(myself, (1,8))
+myself = np.reshape(myself, (1,12))
 myselfDF = pd.DataFrame(myself)
-myselfDF.columns = ['LeftY', 	'RightY' ,	'LeftW' ,	'LeftH' ,	'RighttW', 	'RightH', 	'CursorX' ,	'CursorY']
+myselfDF.columns = ['LeftX', 'RightX', 'LeftY', 'RightY','LeftW','LeftH','RighttW','RightH','Origin_left_X','Origin_left_Y','Origin_right_X','Origin_right_Y']
 myselfDF
 
 print(RF_multi.predict(myselfDF))
